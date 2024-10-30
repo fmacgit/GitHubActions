@@ -35,5 +35,5 @@ jobs:
          name: ${{ env.ARTIFACT_NAME }}
          
      - name: read file
-       run: ${{ env.ARTIFACT_PATH }}
+       run: cat ${{ env.ARTIFACT_PATH }}
      
