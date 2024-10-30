@@ -1,0 +1,14 @@
+name: Non Manual Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:   
+      # Runs a single command using the runners shell
+      - name: Step 1 
+        run: echo Non Manual workflow!
