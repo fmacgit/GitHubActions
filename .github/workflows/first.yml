@@ -2,7 +2,7 @@ name: Manual Workflow
 on: workflow_dispatch 
 jobs: 
   print-message:
-	     runs-on: Linux
+	     runs-on: ubuntu-latest
 	     	   steps:
 	       	       - name: Step 1
 	                 run: 
