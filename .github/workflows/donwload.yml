@@ -1,0 +1,38 @@
+name: Download Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ] 
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - name: print github object
+        id: prod-out
+        run: echo "owner=${{github.repository_owner}}" >> GITHUB_OUTPUT
+      
+      - name: read output
+        run: echo "owner=${{steps.prod-out.outputs.owner}}" >> log.txt
+
+      - name: read file
+        run: cat log.txt
+      
+      - name: upload artifact
+        uses: action/upload-artifact@v4
+        with:
+          path: log.txt
+          name: log-file
+
+      - name: download artifact
+        uses: aochmann/actions-download-artifact@1.0.0        
+        with:
+          name: artifact_name
+          path: log.txt
+      
+          
