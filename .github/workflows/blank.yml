@@ -5,6 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: print repository owner
-        run: echo "${{ toJson(github.repository.owner) }}"
+        run: echo "${{ toJson(github.event.repository.owner) }}"
       - name: print repository name
-        run: echo "${{ toJson(github.repository.name) }}"
+        run: echo "${{ toJson(github.event.repository.name) }}"
