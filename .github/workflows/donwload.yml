@@ -24,7 +24,7 @@ jobs:
         run: cat log.txt
       
       - name: upload artifact
-        uses: action/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           path: log.txt
           name: log-file
