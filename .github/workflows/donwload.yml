@@ -1,38 +1,39 @@
 name: Download Workflow
-
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ] 
   workflow_dispatch:
+env:
+  ARTIFACT_PATH: ${{ secrets.ARTIFACT_PATH }}
+  ARTIFACT_NAME: ${{ vars.ARTIFACT_NAME }}
 jobs:
-  build:
+  create-artifact:
     runs-on: ubuntu-latest
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
+    steps:    
       - name: print github object
         id: prod-out
-        run: echo "owner=${{github.repository_owner}}" >> GITHUB_OUTPUT
+        run: echo "owner=${{github.event.repository_name}}" >> GITHUB_OUTPUT
       
       - name: read output
-        run: echo "owner=${{steps.prod-out.outputs.owner}}" >> log.txt
-
-      - name: read file
-        run: cat log.txt
-      
+        run: echo "owner=${{steps.prod-out.outputs.owner}}" >> ${{ env.ARTIFACT_PATH }}
+     
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: log.txt
-          name: log-file
-          
-      - name: download artifact
-        uses: actions/download-artifact@v4       
-        with:
-          name: log-file
-          path: log.txt
-      
-          
+          path: ${{ env.ARTIFACT_PATH }}
+          name: ${{ env.ARTIFACT_NAME }}
+              
+  get-artifact:
+    needs: create-artifact
+    runs-on: ubuntu-latest
+    steps: 
+     - name: download artifact     
+       uses: actions/download-artifact@v4       
+       with:
+         name: ${{ env.ARTIFACT_NAME }}
+         
+     - name: read file
+       run: ${{ env.ARTIFACT_PATH }}
+     
