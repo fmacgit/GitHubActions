@@ -1,0 +1,12 @@
+name: Manual Workflow
+on: workflow_dispatch 
+jobs: 
+  print-hello:
+	     runs-on: ubunt-latest
+	     steps:
+	         - name: print
+	           run: |
+		             echo "This is my first GitHub Actions Manual Workflow"
+                 echo "Bye " 
+                 
+                
