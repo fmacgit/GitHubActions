@@ -1,5 +1,4 @@
 name: Non Manual Workflow
-
 on:
   push:
     branches: [ "main" ]
